@@ -4,7 +4,9 @@
     "dependencies": {
         "core": "*",
         "radio": "*",
-        "microphone": "*"
+        "microphone": "*",
+        "pxt-DS3231": "github:keble6/pxt-ds3231#v1.0.2",
+        "microbit-pxt-timeanddate": "github:bsiever/microbit-pxt-timeanddate#v2.0.33"
     },
     "files": [
         "main.blocks",
