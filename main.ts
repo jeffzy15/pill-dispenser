@@ -54,6 +54,10 @@ input.onButtonPressed(Button.B, function () {
             basic.pause(2000)
             pins.servoWritePin(AnalogPin.P1, 90)
             medCount = medCount - 1
+            basic.showNumber(medCount)
+            if (medCount < 5) {
+                basic.showString("Top up medicine")
+            }
         }
     }
 })
@@ -65,8 +69,8 @@ radio.setGroup(58)
 timeanddate.setDate(1, 1, 2023)
 timeanddate.setTime(7, 30, 0, timeanddate.MornNight.AM)
 takenMed = false
-appointment = "" + timeanddate.date(timeanddate.DateFormat.MD) + timeanddate.time(timeanddate.TimeFormat.HMMAMPM)
-basic.showString("" + timeanddate.date(timeanddate.DateFormat.MD) + timeanddate.time(timeanddate.TimeFormat.HMMAMPM))
+appointment = timeanddate.dateTime()
+basic.showString(timeanddate.dateTime())
 medCount = 25
 loops.everyInterval(1, function () {
     timeanddate.advanceBy(1, timeanddate.TimeUnit.Milliseconds)
