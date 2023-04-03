@@ -38,21 +38,34 @@ def on_received_string(receivedString):
         music.stop_all_sounds()
 radio.on_received_string(on_received_string)
 
+def on_button_pressed_b():
+    global takenMed
+    # TO DEBUG: SERVO NOT WORKING
+    if not (takenMed):
+        if grove.measure_in_centimeters_v2(DigitalPin.P2) <= 10:
+            takenMed = True
+            pins.servo_write_pin(AnalogPin.P1, 0)
+            basic.pause(2000)
+            pins.servo_write_pin(AnalogPin.P1, 90)
+input.on_button_pressed(Button.B, on_button_pressed_b)
+
 fall = False
+takenMed = False
 radio.set_group(58)
-basic.show_string("hr:")
+timeanddate.set_time(7, 30, 0, timeanddate.MornNight.AM)
+takenMed = False
 
 def on_every_interval():
     timeanddate.advance_by(1, timeanddate.TimeUnit.MILLISECONDS)
 loops.every_interval(1, on_every_interval)
 
-basic.show_string("hr:")
-while not (input.button_is_pressed(Button.B)):
-    if input.button_is_pressed(Button.A):
-        timeanddate.advance_by(1, timeanddate.TimeUnit.HOURS)
-    basic.show_string(timeanddate.time(timeanddate.TimeFormat.HMM))
-basic.show_string("min:")
-while not (input.button_is_pressed(Button.B)):
-    if input.button_is_pressed(Button.A):
-        timeanddate.advance_by(1, timeanddate.TimeUnit.MINUTES)
-    basic.show_string(timeanddate.time(timeanddate.TimeFormat.HMM))
+def on_forever():
+    if timeanddate.time(timeanddate.TimeFormat.HMMAMPM) == "7:30am":
+        if not (takenMed):
+            music.start_melody(music.built_in_melody(Melodies.RINGTONE), MelodyOptions.ONCE)
+            basic.show_string("Take pills")
+    elif timeanddate.time(timeanddate.TimeFormat.HMMAMPM) != "7:30am":
+        if not (takenMed):
+            music.start_melody(music.built_in_melody(Melodies.RINGTONE), MelodyOptions.ONCE)
+            basic.show_string("Take pills")
+basic.forever(on_forever)
