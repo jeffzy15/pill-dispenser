@@ -69,19 +69,19 @@ radio.setGroup(58)
 timeanddate.setDate(1, 1, 2023)
 timeanddate.setTime(7, 30, 0, timeanddate.MornNight.AM)
 takenMed = false
-appointment = timeanddate.dateTime()
-basic.showString(timeanddate.dateTime())
+appointment = "" + timeanddate.time(timeanddate.TimeFormat.HMMAMPM) + timeanddate.date(timeanddate.DateFormat.MD)
+basic.showString("" + (appointment))
 medCount = 25
 loops.everyInterval(1, function () {
     timeanddate.advanceBy(1, timeanddate.TimeUnit.Milliseconds)
 })
 basic.forever(function () {
-    if (timeanddate.time(timeanddate.TimeFormat.HMMAMPM) == "7:30am") {
+    if (timeanddate.time(timeanddate.TimeFormat.HMMAMPM) == "7:31am") {
         if (!(takenMed)) {
             music.startMelody(music.builtInMelody(Melodies.Ringtone), MelodyOptions.Once)
             basic.showString("Take pills")
         }
-    } else if (timeanddate.time(timeanddate.TimeFormat.HMMAMPM) != "7:30am") {
+    } else if (timeanddate.time(timeanddate.TimeFormat.HMMAMPM) != "7:32am") {
         if (!(takenMed)) {
             music.startMelody(music.builtInMelody(Melodies.Ringtone), MelodyOptions.Once)
             basic.showString("Take pills")
